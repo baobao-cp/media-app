@@ -1,0 +1,35 @@
+-----SESSION-----
+
+### Session store in tomcat
+By default, session is store in tomcat.
+When Application is stopped, all session will store in Inmemory(my computer)
+And when Application is restarted , session which is stored in Inmemory will load to application
+-- StandardManager -> class in tomcat package for session manager
+    -> doLoad() : load session from Inmemory when server is restarted
+
+-- SpringHttpSessionConfiguration
+
+### Session for Authentication
+-- CompositeSessionAuthenticationStrategy : this class get all SessionAuthenticationStrategy
+and invoke method onAuthentication()
+    ## onAuthentication()
+    --ConcurrentSessionControlAuthenticationStrategy : In addition to the steps from the superclass,
+    the sessionRegistry will be updated the new session information.
+    Check permit number for session created and compare to limitSession which configed
+
+
+### Session store in database/redis
+Under the hood, Spring Boot applies configuration that is equivalent to manually adding @EnableRedisHttpSession annotation.
+This creates a Spring bean with the name of springSessionRepositoryFilter that implements Filter.
+The filter is in charge of replacing the HttpSession implementation to be backed by Spring Session.
+
+-- SessionStoreMappings : Mappings between StoreType and @Configuration., config for session store type.
+-- SessionRepositoryFilter : This filter will invoke when access HttpSession and
+                              Find class instance for session store
+-- SessionRepository : interface provider method to store session information
+                    A repository interface for managing Session instances.
+    implementation class :
+        -- JdbcIndexedSessionRepository : store session in database
+        -- RedisSessionRepository / RedisIndexedSessionRepository : store session in redis
+
+ ### Session Event/Listener

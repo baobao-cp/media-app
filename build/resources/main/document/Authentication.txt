@@ -1,0 +1,7 @@
+
+Authentication by default will process in the filter
+-- AbstractAuthenticationProcessingFilter : class for logic authentication
+    -> doFilter() : check Authentication is required with method requiresAuthentication()
+    Get Authentication object with method attemptAuthentication()
+    - Authentication is successful : save authentication with session by SessionAuthenticationStrategy class
+    and call method successfulAuthentication()

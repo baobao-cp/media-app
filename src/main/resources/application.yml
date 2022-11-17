@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    username: root
+    password: 12345
+    url: jdbc:mysql://localhost:3306/elearning
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: false
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: create
+  thymeleaf:
+    cache: false
+  web:
+    resources:
+      static-locations: file:src/main/resources/static/
+  session:
+    store-type: jdbc
+    jdbc:
+      table-name: SPRING_SESSION
+      initialize-schema: always
+
+server:
+  servlet:
+    session:
+      persistent: false
+      timeout: 2m
+      # place to store session when application is reloading
+#      store-dir: /sessions
